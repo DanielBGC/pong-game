@@ -1,0 +1,15 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+#mycanvas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    margin-top: -300px;
+    margin-left: -300px;
+
+    background-color: black;
+}
