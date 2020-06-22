@@ -5,6 +5,10 @@ var ctx = canvas.getContext("2d");
 
 var teclas = {};
 
+var jogo = {
+    rebatidas: 0
+}
+
 var bola = {
     x: (canvas.width / 2) - 10,
     y: (canvas.height / 2) - 10,
@@ -68,11 +72,13 @@ function moveBola() {
     if(bola.y + bola.altura >= esquerda.y && bola.y <= esquerda.y + esquerda.altura && bola.x <= esquerda.x + esquerda.largura) {
         bola.dirx = 1;
         bola.mod += 0.2;
+        jogo.rebatidas++;
     }
 
     else if(bola.y + bola.altura >= direita.y && bola.y <= direita.y + direita.altura && bola.x + bola.largura >= direita.x) {
         bola.dirx = -1;
         bola.mod += 0.2;
+        jogo.rebatidas++;
     }
 
     //Move verticalmente
@@ -105,6 +111,7 @@ function newGame(winner) {
     bola.y = (canvas.height / 2) - bola.altura / 2
     bola.x = (canvas.width / 2) - bola.largura / 2
     bola.mod = 0;
+    jogo.rebatidas = 0;
 }
 
 function desenha() {
@@ -133,6 +140,9 @@ function desenha() {
 
     //Renderiza o placar do player 2
     ctx.fillText("Player 2: " + direita.score, 450, 30)
+
+    //Renderiza a quantidade total de rebatidas
+    ctx.fillText("Rebatidas: " + jogo.rebatidas, 250, 30)
 }
 //Chama a função desenha a cada 10 milissegundos
 setInterval(desenha, 10)
