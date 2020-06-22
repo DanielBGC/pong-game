@@ -71,13 +71,13 @@ function moveBola() {
     //Move horizontalmente
     if(bola.y + bola.altura >= esquerda.y && bola.y <= esquerda.y + esquerda.altura && bola.x <= esquerda.x + esquerda.largura) {
         bola.dirx = 1;
-        bola.mod += 0.2;
+        bola.mod += 0.1;
         jogo.rebatidas++;
     }
 
     else if(bola.y + bola.altura >= direita.y && bola.y <= direita.y + direita.altura && bola.x + bola.largura >= direita.x) {
         bola.dirx = -1;
-        bola.mod += 0.2;
+        bola.mod += 0.1;
         jogo.rebatidas++;
     }
 
@@ -131,7 +131,7 @@ function desenha() {
 
     //Renderiza a bola 
     ctx.fillRect(bola.x, bola.y, bola.largura, bola.altura);
-
+    
     //Determina a fonte utilizada dentro do canvas
     ctx.font = "20px Arial";
 
@@ -142,6 +142,7 @@ function desenha() {
     ctx.fillText("Player 2: " + direita.score, 450, 30)
 
     //Renderiza a quantidade total de rebatidas
+    ctx.fillStyle = "red"
     ctx.fillText("Rebatidas: " + jogo.rebatidas, 250, 30)
 }
 //Chama a função desenha a cada 10 milissegundos
