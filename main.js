@@ -69,13 +69,13 @@ function moveBloco() {
 
 function moveBola() {
     //Move horizontalmente
-    if(bola.y + bola.altura >= esquerda.y && bola.y <= esquerda.y + esquerda.altura && bola.x <= esquerda.x + esquerda.largura) {
+    if(bola.y + bola.altura >= esquerda.y && bola.y <= esquerda.y + esquerda.altura && bola.x <= esquerda.x + esquerda.largura + 9) {
         bola.dirx = 1;
         bola.mod += 0.1;
         jogo.rebatidas++;
     }
 
-    else if(bola.y + bola.altura >= direita.y && bola.y <= direita.y + direita.altura && bola.x + bola.largura >= direita.x) {
+    else if(bola.y + bola.altura >= direita.y && bola.y <= direita.y + direita.altura && bola.x + bola.largura >= direita.x + 8) {
         bola.dirx = -1;
         bola.mod += 0.1;
         jogo.rebatidas++;
@@ -92,10 +92,11 @@ function moveBola() {
     bola.y += (bola.speed + bola.mod) * bola.diry;
 
     //Se a bola passar do bloco da esquerda
-    if(bola.x < esquerda.x + esquerda.largura - 10)
+    if(bola.x < esquerda.x + esquerda.largura - 8)
         newGame("player 2")
+
     //Se a bola passar do bloco da direita
-    else if(bola.x + bola.largura > direita.x + 10)
+    else if(bola.x + bola.largura > direita.x + 15)
         newGame("player 1")
 }
 
@@ -130,7 +131,11 @@ function desenha() {
     ctx.fillRect(direita.x, direita.y, direita.largura, direita.altura);
 
     //Renderiza a bola 
-    ctx.fillRect(bola.x, bola.y, bola.largura, bola.altura);
+    // ctx.fillRect(bola.x, bola.y, bola.largura, bola.altura);
+    ctx.beginPath();
+    ctx.arc(bola.x, bola.y, 10, 0, Math.PI * 2, true);  // Olho esquerdo
+    ctx.stroke();
+    ctx.fill();
     
     //Determina a fonte utilizada dentro do canvas
     ctx.font = "20px Arial";
