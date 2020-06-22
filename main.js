@@ -49,6 +49,8 @@ document.addEventListener("keyup", function(e) {
     delete teclas[e.keyCode];
 })
 
+
+
 function moveBloco() {
     //tecla 'W'    
     if(87 in teclas && esquerda.y > 0) 
@@ -103,7 +105,7 @@ function moveBola() {
 function newGame(winner) {
     if(winner == "player 1")
         esquerda.score++;
-    else 
+    if(winner == "player 2")
         direita.score++;
 
     //Volta a posição inicial
@@ -115,11 +117,19 @@ function newGame(winner) {
     jogo.rebatidas = 0;
 }
 
+function resetGame() {
+    //tecla 'R' 
+    if(82 in teclas) 
+    newGame()
+}
+
 function desenha() {
     //Limpa o canvas atual
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     moveBloco()
     moveBola()
+    resetGame()
+    
 
     //Estilo dos desenhos --> cor branca
     ctx.fillStyle = "white";
