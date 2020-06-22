@@ -119,8 +119,11 @@ function newGame(winner) {
 
 function resetGame() {
     //tecla 'R' 
-    if(82 in teclas) 
-    newGame()
+    if(82 in teclas) { 
+        esquerda.score = 0;
+        direita.score = 0;
+        newGame()
+    }
 }
 
 function desenha() {
