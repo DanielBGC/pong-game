@@ -58,10 +58,15 @@ document.addEventListener("keyup", function(e) {
 })
 
 function players(player) {
-    if(player == 1)
+    if(player == 1) {
         jogadores = 1;
-    if(player == 2)
+        resetGame()
+    }
+
+    if(player == 2) {
         jogadores = 2;
+        resetGame()
+    }
         
     return jogadores;
 }
@@ -85,6 +90,13 @@ function moveBloco() {
     //tecla 'arrowDown'
     if(40 in teclas && direita.y + direita.altura < canvas.height)
         direita.y += direita.speed;
+
+    //tecla 'R' 
+    if(82 in teclas) { 
+        esquerda.score = 0;
+        direita.score = 0;
+        newGame()
+    }
 }
 
 function moveBola() {
@@ -125,7 +137,7 @@ function newGame(winner) {
         esquerda.score++;
     if(winner == "player 2")
         direita.score++;
-
+    
     //Volta a posição inicial
     esquerda.y = (canvas.height / 2) - 60
     direita.y = esquerda.y
@@ -133,15 +145,13 @@ function newGame(winner) {
     bola.x = (canvas.width / 2) - bola.largura / 2
     bola.mod = 0;
     jogo.rebatidas = 0;
+    
 }
 
 function resetGame() {
-    //tecla 'R' 
-    if(82 in teclas) { 
-        esquerda.score = 0;
-        direita.score = 0;
-        newGame()
-    }
+    esquerda.score = 0;
+    direita.score = 0;
+    newGame()
 }
 
 function desenha() {
@@ -149,7 +159,6 @@ function desenha() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     moveBloco()
     moveBola()
-    resetGame()
     players()
 
     //Estilo dos desenhos --> cor branca
