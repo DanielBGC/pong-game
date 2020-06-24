@@ -4,11 +4,16 @@ var canvas = document.querySelector("#mycanvas");
 var ctx = canvas.getContext("2d");
 
 const btnPlayers = document.querySelectorAll(".players button")
+const btnDificuldades = document.querySelectorAll(".dificuldades button")
 
 btnPlayers.forEach(element => {
     //inicia um novo jogo quando o usuário troca a quantidade de jogadores
     element.addEventListener("click", newGame)
 });
+
+btnDificuldades.forEach(element => {
+    element.addEventListener("click", resetGame)
+})
 
 var teclas = {};
 var jogadores;
@@ -71,7 +76,21 @@ function players(player) {
     return jogadores;
 }
 
+function dificuldade(dif) {
+    if(dif == 'facil')
+        bola.speed = 2;
+    if(dif == 'medio')
+        bola.speed = 3;
+    if(dif == 'dificil')
+        bola.speed = 7;
+}
+
 function moveBloco() {
+    if(jogadores == 1) {
+        //o bloco da esquerda acompanha a altura da bolinha
+        esquerda.y = bola.y - (esquerda.altura/2)
+    }
+
     //tecla 'W'    
     if(87 in teclas && esquerda.y > 0) 
         esquerda.y -= esquerda.speed;
@@ -79,9 +98,6 @@ function moveBloco() {
     //tecla 'S'
     if(83 in teclas && esquerda.y + esquerda.altura < canvas.height)
         esquerda.y += esquerda.speed;
-
-    if(jogadores == 1)
-        esquerda.y = bola.y - (esquerda.altura/2)
 
     //tecla 'arrowUp'    
     if(38 in teclas && direita.y > 0) 

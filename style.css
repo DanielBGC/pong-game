@@ -14,14 +14,28 @@
     background-color: black;
 }
 
-.players {
+.players, .dificuldades {
     display: flex;
     flex-direction: column;
-    max-width: 200px;
+    width: 200px;
 }
 
 .players button {
-    margin: 20px 20px;
+    margin: 10px 20px;
+    font-size: 18pt;
+}
+
+.dificuldades {
+    margin-top: 50px;
+}
+
+.dificuldades h2 {
+    font-size: 14pt;
+    margin-left: 20px;
+}
+
+.dificuldades button {
+    margin: 10px 20px;
     font-size: 18pt;
 }
 
@@ -31,6 +45,8 @@
     color: white;
     background-color: #ff0000;
 
-    border-radius: 8px;
+    border-radius: 4px;
     outline: none;
+
+    width: 200px;
 }

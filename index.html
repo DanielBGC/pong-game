@@ -9,11 +9,18 @@
 </head>
 <body>
 
+    <button class="reset" onclick="resetGame()">RESET</button>
     <div class="players">
         <button onclick="players(1)">1 Player</button>
         <button onclick="players(2)">2 Players</button>
     </div>
-    <button class="reset" onclick="resetGame()">RESET</button>
+
+    <div class="dificuldades">
+        <h2>Escolha a dificuldade</h2>
+        <button onclick="dificuldade('facil')">Fácil</button>
+        <button onclick="dificuldade('medio')">Médio</button>
+        <button onclick="dificuldade('dificil')">Difícil</button>
+    </div>
 
     <canvas id="mycanvas" width=600 height=600>
         <!-- Exibe a mensagem somente se o navegador não for compatível --> 
