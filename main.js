@@ -28,7 +28,7 @@ var bola = {
     altura: 20,
     largura: 20,
     dirx: -1, 
-    diry: 1,
+    diry: 0.6,
     speed: 2,
     mod: 0
 };
@@ -160,6 +160,7 @@ function newGame(winner) {
     bola.y = (canvas.height / 2) - bola.altura / 2
     bola.x = (canvas.width / 2) - bola.largura / 2
     bola.mod = 0;
+    bola.diry = 0.6;
     jogo.rebatidas = 0;
     
 }
