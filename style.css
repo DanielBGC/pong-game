@@ -13,3 +13,14 @@
 
     background-color: black;
 }
+
+.players {
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+}
+
+.players button {
+    margin: 20px 20px;
+    font-size: 18pt;
+}

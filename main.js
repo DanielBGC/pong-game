@@ -3,7 +3,15 @@ var canvas = document.querySelector("#mycanvas");
 //Determina que todo o elemento canvas é bidimensional (2D)
 var ctx = canvas.getContext("2d");
 
+const btnPlayers = document.querySelectorAll(".players button")
+
+btnPlayers.forEach(element => {
+    //inicia um novo jogo quando o usuário troca a quantidade de jogadores
+    element.addEventListener("click", newGame)
+});
+
 var teclas = {};
+var jogadores;
 
 var jogo = {
     rebatidas: 0
@@ -49,7 +57,14 @@ document.addEventListener("keyup", function(e) {
     delete teclas[e.keyCode];
 })
 
-
+function players(player) {
+    if(player == 1)
+        jogadores = 1;
+    if(player == 2)
+        jogadores = 2;
+        
+    return jogadores;
+}
 
 function moveBloco() {
     //tecla 'W'    
@@ -59,6 +74,9 @@ function moveBloco() {
     //tecla 'S'
     if(83 in teclas && esquerda.y + esquerda.altura < canvas.height)
         esquerda.y += esquerda.speed;
+
+    if(jogadores == 1)
+        esquerda.y = bola.y - (esquerda.altura/2)
 
     //tecla 'arrowUp'    
     if(38 in teclas && direita.y > 0) 
@@ -132,7 +150,7 @@ function desenha() {
     moveBloco()
     moveBola()
     resetGame()
-    
+    players()
 
     //Estilo dos desenhos --> cor branca
     ctx.fillStyle = "white";
