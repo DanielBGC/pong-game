@@ -1,0 +1,42 @@
+/* body {
+    overflow: hidden;
+} */
+
+.container {
+    padding: 0;
+}
+
+#modalInicio {
+    height: 100vh;
+
+    display: none;
+}
+
+#modalInicio .dialog {
+    display: none;
+}
+
+#modalInicio h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+#modalInicio button {
+    font-weight: 700;
+}
+
+#modalInicio .players {
+    margin-bottom: 2rem;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+#modalInicio .input-group {
+    margin-bottom: 2rem;
+}
+
+#modalInicio .input-group label {
+    font-weight: 700;
+}

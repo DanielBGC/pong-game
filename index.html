@@ -4,28 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pong</title>
-
-    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <link rel="stylesheet" href="styles/modal-inicio.css">
+    <link rel="stylesheet" href="styles/modal-fim.css">
+    <link rel="stylesheet" href="styles/canvas.css">
 </head>
 <body>
+    
 
-    <button class="reset" onclick="resetGame()">RESET</button>
-    <div class="players">
-        <button onclick="players(1)">1 Player</button>
-        <button onclick="players(2)">2 Players</button>
+<div class="container">
+    <div id="modalInicio">
+        <h1>Seja bem-vindo!</h1>
+        <form onsubmit="event.preventDefault();">  
+            <div class="players row">
+                <button class="btn btn-primary col-5" id="player1_btn">1 jogador</button>
+                <button class="btn btn-primary col-5" id="player2_btn">2 jogadores</button>
+            </div>
+
+            <div class="input-group row player1">
+                <label>Nome do jogador 1</label>
+                <input type="text" class="form-control" placeholder="Jogador 1">
+            </div>
+            <div class="dialog" id="dialogPlayer1" title="Nome inválido - Player 1">
+                <p>Por favor, insira um nome válido</p>
+            </div>
+                 
+            <div class="input-group row player2">
+                <label>Nome do jogador 2</label>
+                <input type="text" class="form-control" placeholder="Jogador 2">
+            </div>
+            <div class="dialog" id="dialogPlayer2" title="Nome inválido - Player 2">
+                <p>Por favor, insira um nome válido</p>
+            </div>            
+
+            <div class="row">
+                <button class="btn btn-primary col-12" id="startGameBtn">Iniciar</button>
+            </div>
+        <form>
     </div>
 
-    <div class="dificuldades">
-        <h2>Escolha a dificuldade</h2>
-        <button onclick="dificuldade('facil')">Fácil</button>
-        <button onclick="dificuldade('medio')">Médio</button>
-        <button onclick="dificuldade('dificil')">Difícil</button>
-    </div>
+    <div id="modalFim">
+        <h1>Tabela de resultados</h1>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Pontuação</th>
+                  <th scope="col">Data</th>
+                </tr>
+              </thead>
+            <tbody>
+                <tr>
+                    <th>Daniel</th>
+                    <td>43</td>
+                    <td>18/05/2002</td>
+                </tr>
+                <tr>
+                    <th>Felipe</th>
+                    <td>7</td>
+                    <td>05/07/2021</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <canvas id="mycanvas" width=600 height=600>
+
+        <div class="row">
+            <button class="btn btn-primary col-12" id="playAgainBtn">Jogar novamente</button>
+        </div>
+        
+    </div>
+</div>
+
+
+    <canvas id="mycanvas">
         <!-- Exibe a mensagem somente se o navegador não for compatível --> 
         O seu browser não suporta esse elemento
+
     </canvas>
-    <script src="main.js"></script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="scripts/canvas.js"></script>
 </body>
 </html>
