@@ -75,7 +75,7 @@ var bola = {
     y: (canvas.height / 2) - 10,
     altura: 20,
     largura: 20,
-    dirx: -1, 
+    dirx: 1, 
     diry: 0.6,
     speed: 4,
     mod: 0
@@ -124,11 +124,11 @@ function movePlayer() {
     
 
     //tecla 'W'    
-    if(87 in teclas && esquerda.y > 0) 
+    if(87 in teclas && direita.y > 0) 
         direita.y -= direita.speed;
 
     //tecla 'S'
-    if(83 in teclas && esquerda.y + esquerda.altura < canvas.height)
+    if(83 in teclas && direita.y + direita.altura < canvas.height)
         direita.y += direita.speed;
 
     //tecla 'arrowUp'    
@@ -151,13 +151,13 @@ function moveBola() {
     //Move horizontalmente
     if(bola.y + bola.altura >= esquerda.y && bola.y <= esquerda.y + esquerda.altura && bola.x <= esquerda.x + esquerda.largura + 9) {
         bola.dirx = 1;
-        bola.mod += 0.5;
+        bola.mod += 0.2;
         jogo.rebatidas++;
     }
 
     else if(bola.y + bola.altura >= direita.y && bola.y <= direita.y + direita.altura && bola.x + bola.largura >= direita.x + 8) {
         bola.dirx = -1;
-        bola.mod += 0.5;
+        bola.mod += 0.2;
         jogo.rebatidas++;
     }
 
@@ -190,9 +190,6 @@ function increaseScore(winner) {
             direita.max_score = jogo.rebatidas;
         }
 
-        console.log(direita.vidas)
-        console.log(direita.max_score)
-
         if(direita.vidas == 0) {
             salvarPontuacao(direita);
             jogo.iniciado = false;
@@ -212,6 +209,7 @@ function newGame() {
     bola.y = (canvas.height / 2) - 10,
     bola.mod = 0;
     bola.diry = 0.6;
+    bola.dirx = 1;
     jogo.rebatidas = 0;
 }
 
@@ -228,9 +226,9 @@ function desenha() {
     //Limpa o canvas atual
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    movePlayer()
     if(jogo.iniciado == true) {
         moveBola()
+        movePlayer()
     }
 
     //Estilo dos desenhos --> cor branca
@@ -251,22 +249,25 @@ function desenha() {
     //Determina a fonte utilizada dentro do canvas
     ctx.font = "20px Arial";
 
-    //Renderiza o placar BOT
-    let scoreBOT = `${esquerda.name}: ${esquerda.score}`
-    ctx.fillText(scoreBOT, 50, 30)
+    //Renderiza o placar do BOT
+    ctx.fillText("BOT", 20, 30)
 
-    //Renderiza o placar do player 
-    let scorePlayer = `${direita.name}: ${direita.score}`
-    ctx.fillText(scorePlayer, canvas.width - 150, 30)
+    //Renderiza as vidas do player 
+    const image = document.getElementById('image');
+
+    for(let i=1; i <= direita.vidas; i++) {
+        ctx.drawImage(image, canvas.width - (40*i), 15);
+    }
 
     //Renderiza a quantidade total de rebatidas
     ctx.fillStyle = "red"
-    ctx.fillText("Rebatidas: " + jogo.rebatidas, (canvas.width/2) - 70, 30)
+    ctx.font = "24pt Arial";
+    ctx.fillText(jogo.rebatidas, (canvas.width/2), 30)
 }
 //Chama a função desenha a cada 10 milissegundos
 setInterval(desenha, 10)
 
-/////////////////////////////////////////MODAL FIM///////////////////////////////////////////////////////
+/////////////////////////////////////////MODAL-FIM///////////////////////////////////////////////////////
 const playAgainBtn = document.querySelector("button#playAgainBtn")
 playAgainBtn.addEventListener("click", playAgain)
 
@@ -284,7 +285,15 @@ function resetConfig() {
     jogo.rebatidas = 0;
 }
 
-const arrayPlayers = [];
+const allPlayer = JSON.parse(localStorage.getItem("allPlayers"));
+var arrayPlayers;
+
+if(allPlayer == null) {
+    arrayPlayers = [];
+}
+else {
+    arrayPlayers = allPlayer;
+} 
 
 function currentDate() {
     var today = new Date();
@@ -309,8 +318,14 @@ function salvarPontuacao(player) {
     canvas.style.display = "none"
     document.querySelector("#modalFim").style.display = "block";
 
-    construirTabela()
+    setLocalStorage();
+    construirTabela();
 }
+
+function setLocalStorage() {
+    localStorage.setItem("allPlayers", JSON.stringify(arrayPlayers));
+}
+
 
 function construirTabela() {
     const table = document.querySelector("table")

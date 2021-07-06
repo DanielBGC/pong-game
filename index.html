@@ -16,49 +16,52 @@
 <body>
     
 
-<div class="container">
-    <div id="modalInicio">
-        <h1>Seja bem-vindo!</h1>
-        <form onsubmit="event.preventDefault();">  
-            <div class="playerDiv">
-                <label>Por favor, insira seu nome:</label>
-                <input type="text" placeholder="John Doe">
-            </div>
+    <div class="container">
+        <div id="modalInicio">
+            <h1>Seja bem-vindo!</h1>
+            <form onsubmit="event.preventDefault();">  
+                <div class="playerDiv">
+                    <label>Por favor, insira seu nome:</label>
+                    <input type="text" placeholder="John Doe">
+                </div>
 
-            <div class="dialog" id="dialogPlayer" title="Nome inválido">
-                <p>Por favor, insira um nome válido</p>
-            </div>
+                <div class="dialog" id="dialogPlayer" title="Nome inválido">
+                    <p>Por favor, insira um nome válido</p>
+                </div>
 
-            <div>
-                <button class="btn btn-primary" id="startGameBtn">Iniciar</button>
-            </div>
-        <form>
-    </div>
-
-    <div id="modalFim">
-        <h1>Tabela de resultados</h1>
-        
-        <table class="table">
-            <thead>
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Pontuação</th>
-                  <th scope="col">Data</th>
-                </tr>
-              </thead>
-            <tbody>
-                
-            </tbody>
-        </table>
-
-
-        <div class="row">
-            <button class="btn btn-primary col-12" id="playAgainBtn">Jogar novamente</button>
+                <div>
+                    <button class="btn btn-primary" id="startGameBtn">Iniciar</button>
+                </div>
+            <form>
         </div>
-        
-    </div>
-</div>
 
+        <div id="modalFim">
+            <h1>Tabela de resultados</h1>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Pontuação</th>
+                    <th scope="col">Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+
+
+            <div class="row">
+                <button class="btn btn-primary col-12" id="playAgainBtn">Jogar novamente</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <div style="display:none;">
+        <img id="image" src="assets/heart.png">
+    </div>
 
     <canvas id="mycanvas">
         <!-- Exibe a mensagem somente se o navegador não for compatível --> 
