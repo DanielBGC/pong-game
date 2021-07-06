@@ -1,7 +1,3 @@
-// import {qtdPlayers, jogoIniciado} from "./modal-inicio.js"
-// console.log(qtdPlayers)
-// console.log(jogoIniciado)
-
 /////////////////////////////////////////MODAL INÍCIO///////////////////////////////////////////////////////
 dialogOptions = {
     show: {
@@ -22,73 +18,26 @@ function showModal() {
 }
 
 
-const divPlayer1 = document.querySelector("div.player1")
-const divPlayer2 = document.querySelector("div.player2")
-const namePlayer1 = divPlayer1.querySelector("input")
-const namePlayer2 = divPlayer2.querySelector("input")
-
-var players = 1;
-setPlayers(players)
+const divPlayer = document.querySelector("div.playerDiv")
+const namePlayer = divPlayer.querySelector("input")
 
 var jogoIniciado = false;
 
-const player1Btn = document.querySelector("#player1_btn")
-const player2Btn = document.querySelector("#player2_btn")
-player1Btn.addEventListener("click", () => {
-    setPlayers(1)
-})
-player2Btn.addEventListener("click", () => {
-    setPlayers(2)
-})
-
-function setPlayers(num) {
-    if(num == 1) {
-        divPlayer1.style.display = "";
-        divPlayer2.style.display = "none";
-    }
-
-    else if(num == 2) {
-        divPlayer1.style.display = "";
-        divPlayer2.style.display = "";
-    }
-    players = num;
-    console.log(players)
-}
 
 const startGameBtn = document.querySelector("button#startGameBtn")
 startGameBtn.addEventListener("click", startGame)
 
 function startGame() {
-    if(players == 1) {
-        if(namePlayer1.value == "" || namePlayer1.value == " ") {
-            $(function() {
-                $("#dialogPlayer1").dialog(dialogOptions);
-            });
-        } 
-        else {
-            mostrarCanvas();
-            hideModal();
-            esquerda.name = namePlayer1.value
-        }
-    }
 
-    else if(players == 2) {
-        if(namePlayer1.value == "" || namePlayer1.value == " ") {
-            $(function() {
-                $("#dialogPlayer1").dialog(dialogOptions);
-            });
-        }
-        else if(namePlayer2.value == "" || namePlayer2.value == " ") {
-            $(function() {
-                $("#dialogPlayer2").dialog(dialogOptions);
-            });
-        }
-        else {
-            mostrarCanvas();
-            hideModal();
-            esquerda.name = namePlayer1.value
-            direita.name = namePlayer2.value
-        }
+    if(namePlayer.value == "" || namePlayer.value == " ") {
+        $(function() {
+            $("#dialogPlayer").dialog(dialogOptions);
+        });
+    } 
+    else {
+        mostrarCanvas();
+        hideModal();
+        direita.name = namePlayer.value
     }
 }
 
@@ -114,6 +63,8 @@ if(!jogoIniciado) {
 //objeto para identificar as teclas pressionadas no teclado
 var teclas = {};
 
+var vidasMax = 3;
+
 var jogo = {
     rebatidas: 0,
     iniciado: jogoIniciado
@@ -130,7 +81,7 @@ var bola = {
     mod: 0
 };
 
-//Player 1
+//BOT
 var esquerda = {
     x: 15,
     y: (canvas.height / 2) - 80,
@@ -138,18 +89,20 @@ var esquerda = {
     largura: 15,
     score: 0,
     speed: 10,
-    name: "Player 1"
+    name: "BOT"
 };
 
-//Player 2
+//Player
 var direita = {
     x: canvas.width - 30,
     y: (canvas.height / 2) - 80,
     altura: 160,
     largura: 15,
     score: 0,
+    max_score: 0,
+    vidas: vidasMax,
     speed: 10,
-    name: "Player 2"
+    name: "Player"
 };
 
 //Ouvidor de eventos para quando uma tecla for pressionada
@@ -161,28 +114,22 @@ document.addEventListener("keyup", function(e) {
     delete teclas[e.keyCode];
 })
 
-function dificuldade(dif) {
-    if(dif == 'facil')
-        bola.speed = 2;
-    if(dif == 'medio')
-        bola.speed = 3;
-    if(dif == 'dificil')
-        bola.speed = 7;
-}
+canvas.addEventListener("click", function(e) {
+    jogo.iniciado = true;
+})
 
 function movePlayer() {
-    if(players == 1) {
-        //o bloco da esquerda acompanha a altura da bolinha
-        esquerda.y = bola.y - (esquerda.altura/2)
-    }
+    //move o BOT
+    esquerda.y = bola.y - (esquerda.altura/2)
+    
 
     //tecla 'W'    
     if(87 in teclas && esquerda.y > 0) 
-        esquerda.y -= esquerda.speed;
+        direita.y -= direita.speed;
 
     //tecla 'S'
     if(83 in teclas && esquerda.y + esquerda.altura < canvas.height)
-        esquerda.y += esquerda.speed;
+        direita.y += direita.speed;
 
     //tecla 'arrowUp'    
     if(38 in teclas && direita.y > 0) 
@@ -198,24 +145,19 @@ function movePlayer() {
         direita.score = 0;
         resetGame()
     }
-
-    //tecla 'Espaço'    
-    if(32 in teclas)  {
-        jogo.iniciado = true;
-    }
 }
 
 function moveBola() {
     //Move horizontalmente
     if(bola.y + bola.altura >= esquerda.y && bola.y <= esquerda.y + esquerda.altura && bola.x <= esquerda.x + esquerda.largura + 9) {
         bola.dirx = 1;
-        bola.mod += 0.1;
+        bola.mod += 0.5;
         jogo.rebatidas++;
     }
 
     else if(bola.y + bola.altura >= direita.y && bola.y <= direita.y + direita.altura && bola.x + bola.largura >= direita.x + 8) {
         bola.dirx = -1;
-        bola.mod += 0.1;
+        bola.mod += 0.5;
         jogo.rebatidas++;
     }
 
@@ -230,30 +172,36 @@ function moveBola() {
 
     bola.x += (bola.speed + bola.mod) * bola.dirx;
     bola.y += (bola.speed + bola.mod) * bola.diry;
-    console.log(bola.speed + bola.mod)
-
-    //Se a bola passar do bloco da esquerda
-    if(bola.x - bola.largura/2 < esquerda.x + esquerda.largura/2) {
-        //Player 2 ganhou
-        increaseScore("p2")
-        newGame()
-    }
 
     //Se a bola passar do bloco da direita
-    else if(bola.x + bola.largura/2 > direita.x + direita.largura){
-        //Player 1 ganhou
-        increaseScore("p1")
+    if(bola.x + bola.largura/2 > direita.x + direita.largura){
+        //BOT ganhou
+        increaseScore("bot")
         newGame();
-
     }
 }
 
 function increaseScore(winner) {
-    if(winner == "p1")
-    esquerda.score++;
+    if(winner == "bot") {
+        esquerda.score++;
+        direita.vidas--;
 
-    if(winner == "p2")
+        if(direita.max_score < jogo.rebatidas) {
+            direita.max_score = jogo.rebatidas;
+        }
+
+        console.log(direita.vidas)
+        console.log(direita.max_score)
+
+        if(direita.vidas == 0) {
+            salvarPontuacao(direita);
+            jogo.iniciado = false;
+        }
+    }
+
+    if(winner == "player") {
         direita.score++;
+    }
 }
 
 function newGame() {
@@ -270,6 +218,8 @@ function newGame() {
 function resetGame() {
     esquerda.score = 0;
     direita.score = 0;
+    direita.vidas = vidasMax;
+    direita.max_score = 0;
     newGame()
     jogo.iniciado = false;
 }
@@ -282,12 +232,11 @@ function desenha() {
     if(jogo.iniciado == true) {
         moveBola()
     }
-    // players()
 
     //Estilo dos desenhos --> cor branca
     ctx.fillStyle = "white";
 
-    //Renderiza o jogador da esquerda 
+    //Renderiza o BOT (jogador da esquerda) 
     ctx.fillRect(esquerda.x, esquerda.y, esquerda.largura, esquerda.altura);
     
     //Renderiza o jogador da direita 
@@ -302,13 +251,13 @@ function desenha() {
     //Determina a fonte utilizada dentro do canvas
     ctx.font = "20px Arial";
 
-    //Renderiza o placar do player 1
-    let scoreP1 = `${esquerda.name}: ${esquerda.score}`
-    ctx.fillText(scoreP1, 50, 30)
+    //Renderiza o placar BOT
+    let scoreBOT = `${esquerda.name}: ${esquerda.score}`
+    ctx.fillText(scoreBOT, 50, 30)
 
-    //Renderiza o placar do player 2
-    let scoreP2 = `${direita.name}: ${direita.score}`
-    ctx.fillText(scoreP2, canvas.width - 150, 30)
+    //Renderiza o placar do player 
+    let scorePlayer = `${direita.name}: ${direita.score}`
+    ctx.fillText(scorePlayer, canvas.width - 150, 30)
 
     //Renderiza a quantidade total de rebatidas
     ctx.fillStyle = "red"
@@ -325,4 +274,68 @@ function playAgain() {
     document.querySelector("#modalInicio").style.display = "block";
 
     document.querySelector("#modalFim").style.display = "none";
+
+    resetConfig();
+}
+
+function resetConfig() {
+    direita.vidas = vidasMax;
+    direita.score = 0;
+    jogo.rebatidas = 0;
+}
+
+const arrayPlayers = [];
+
+function currentDate() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = dd + '/' + mm + '/' + yyyy;
+
+    return today;
+}
+
+function salvarPontuacao(player) {
+    const objPlayer = {
+        name: player.name,
+        score: player.max_score,
+        date: currentDate()
+    }
+
+    arrayPlayers.push(objPlayer)
+
+    canvas.style.display = "none"
+    document.querySelector("#modalFim").style.display = "block";
+
+    construirTabela()
+}
+
+function construirTabela() {
+    const table = document.querySelector("table")
+    const tbody = table.querySelector('tbody')
+    const rows = []
+    
+    arrayPlayers.forEach(player => {
+        const row = document.createElement("tr")
+
+        const nameCell = document.createElement("th")
+        nameCell.innerHTML = player.name
+
+        const scoreCell = document.createElement("td")
+        scoreCell.innerHTML = player.score
+
+        const dateCell = document.createElement("td")
+        dateCell.innerHTML = player.date
+
+        row.append(nameCell, scoreCell, dateCell)
+        rows.push(row)
+    });
+
+    tbody.innerHTML = ""
+
+    rows.forEach(element => {
+        tbody.appendChild(element)
+    })
 }

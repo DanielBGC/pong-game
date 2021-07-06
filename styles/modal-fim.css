@@ -5,6 +5,8 @@ body {
 #modalFim {
     min-height: 100vh;
     position: relative;
+
+    display: none;
 }
 
 #modalFim .dialog {
@@ -15,6 +17,15 @@ body {
     text-align: center;
     margin-bottom: 4rem;
     margin-top: 2rem;
+}
+
+#modalFim tbody tr {
+    transition: all 500ms;
+}
+
+#modalFim tbody tr:hover {
+    background-color: rgba(131, 126, 126, 0.329);
+    cursor: pointer;
 }
 
 #modalFim button {

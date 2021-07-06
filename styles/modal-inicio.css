@@ -9,7 +9,37 @@
 #modalInicio {
     height: 100vh;
 
-    display: none;
+    position: relative;
+
+    /* display: none; */
+}
+
+#modalInicio form {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+#modalInicio .playerDiv {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+}
+
+
+#modalInicio .playerDiv input {
+    width: 30vw;
+    padding: .375rem .75rem;
+    margin-top: 5px;
+}
+
+#modalInicio .playerDiv label {
+    font-weight: 700;
 }
 
 #modalInicio .dialog {
@@ -24,19 +54,12 @@
 
 #modalInicio button {
     font-weight: 700;
-}
+    width: 30vw;
 
-#modalInicio .players {
-    margin-bottom: 2rem;
-
-    display: flex;
-    justify-content: space-between;
 }
 
 #modalInicio .input-group {
     margin-bottom: 2rem;
 }
 
-#modalInicio .input-group label {
-    font-weight: 700;
-}
+

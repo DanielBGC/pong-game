@@ -20,29 +20,17 @@
     <div id="modalInicio">
         <h1>Seja bem-vindo!</h1>
         <form onsubmit="event.preventDefault();">  
-            <div class="players row">
-                <button class="btn btn-primary col-5" id="player1_btn">1 jogador</button>
-                <button class="btn btn-primary col-5" id="player2_btn">2 jogadores</button>
+            <div class="playerDiv">
+                <label>Por favor, insira seu nome:</label>
+                <input type="text" placeholder="John Doe">
             </div>
 
-            <div class="input-group row player1">
-                <label>Nome do jogador 1</label>
-                <input type="text" class="form-control" placeholder="Jogador 1">
-            </div>
-            <div class="dialog" id="dialogPlayer1" title="Nome inválido - Player 1">
+            <div class="dialog" id="dialogPlayer" title="Nome inválido">
                 <p>Por favor, insira um nome válido</p>
             </div>
-                 
-            <div class="input-group row player2">
-                <label>Nome do jogador 2</label>
-                <input type="text" class="form-control" placeholder="Jogador 2">
-            </div>
-            <div class="dialog" id="dialogPlayer2" title="Nome inválido - Player 2">
-                <p>Por favor, insira um nome válido</p>
-            </div>            
 
-            <div class="row">
-                <button class="btn btn-primary col-12" id="startGameBtn">Iniciar</button>
+            <div>
+                <button class="btn btn-primary" id="startGameBtn">Iniciar</button>
             </div>
         <form>
     </div>
@@ -59,16 +47,7 @@
                 </tr>
               </thead>
             <tbody>
-                <tr>
-                    <th>Daniel</th>
-                    <td>43</td>
-                    <td>18/05/2002</td>
-                </tr>
-                <tr>
-                    <th>Felipe</th>
-                    <td>7</td>
-                    <td>05/07/2021</td>
-                </tr>
+                
             </tbody>
         </table>
 
