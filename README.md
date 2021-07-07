@@ -1,13 +1,8 @@
-# pong-game
-Jogo criado com Javascript e HTML (Pong)
-
 <h1 align="center">
-    Pong Game
+    Crazy Pong
 </h1>
 
-<p align="center">
-    <img src="https://github.com/DanielBGC/pong-game/blob/master/game-preview.gif">
-</p>
+
    
 <p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -29,12 +24,25 @@ Jogo criado com Javascript e HTML (Pong)
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - [JavaScript](https://www.w3schools.com/js/default.asp)
+- [Canvas](https://www.w3schools.com/html/html5_canvas.asp)
 
 ## 💻 Projeto
 
-Jogo criado com Javascript e HTML (Pong)
+Jogo criado com Javascript e Canvas
 
 Você pode conferir o <a href="https://danielbgc.github.io/pong-game/" target="_blank"> jogo aqui. </a> 
+
+### Versão atual
+<p align="center">
+    <img src="https://github.com/DanielBGC/pong-game/blob/master/assets/preview/game-preview-v2.gif">
+</p>
+
+### Versão anterior
+<p align="center">
+    <img src="https://github.com/DanielBGC/pong-game/blob/master/assets/preview/game-preview.gif">
+</p>
+
+
 
 ## 🤔 Como contribuir
 
