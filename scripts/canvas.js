@@ -12,9 +12,13 @@ dialogOptions = {
 
 function hideModal() {
     document.querySelector("#modalInicio").style.display = "none";
+    document.querySelector("h1.title").style.display = "none"
 }
-function showModal() {
+function showModalIinicio() {
     document.querySelector("#modalInicio").style.display = "";
+    document.querySelector("h1.title").style.display = ""
+
+    namePlayer.value = ""
 }
 
 
@@ -40,6 +44,25 @@ function startGame() {
         direita.name = namePlayer.value
     }
 }
+////////////////////////////////////////EFEITOS SONOROS//////////////////////////////////////////////////
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+
+    this.play = function(){
+      this.sound.play();
+    }
+
+    this.stop = function(){
+      this.sound.pause();
+    }
+}
+
+mySound = new sound("assets/sound.mp3")
 
 
 /////////////////////////////////////////////CANVAS/////////////////////////////////////////////////////
@@ -76,7 +99,7 @@ var bola = {
     altura: 20,
     largura: 20,
     dirx: 1, 
-    diry: 0.6,
+    diry: 1,
     speed: 4,
     mod: 0
 };
@@ -148,26 +171,42 @@ function movePlayer() {
 }
 
 function moveBola() {
+    direcao = Math.random();
+
     //Move horizontalmente
     if(bola.y + bola.altura >= esquerda.y && bola.y <= esquerda.y + esquerda.altura && bola.x <= esquerda.x + esquerda.largura + 9) {
-        bola.dirx = 1;
-        bola.mod += 0.2;
+        bola.dirx = direcao < 0.5 && jogo.rebatidas < 10 ? 1 * 0.6 : 1 * direcao;
+
+        bola.mod += 0.3;
         jogo.rebatidas++;
+
+        som = new sound("assets/sound.mp3")
+        som.play();
     }
 
     else if(bola.y + bola.altura >= direita.y && bola.y <= direita.y + direita.altura && bola.x + bola.largura >= direita.x + 8) {
-        bola.dirx = -1;
-        bola.mod += 0.2;
+        bola.dirx = direcao < 0.5 && jogo.rebatidas < 10 ? -1 * 0.6 : -1 * direcao;
+
+        bola.mod += 0.4;
         jogo.rebatidas++;
+
+        som = new sound("assets/sound.mp3")
+        som.play();
     }
 
     //Move verticalmente
     if(bola.y <= 0)  {
         bola.diry = 1;
+        som = new sound("assets/sound.mp3")
+        som.play();
+
     }
 
     else if(bola.y + bola.altura >= canvas.height) {
         bola.diry = -1;
+        som = new sound("assets/sound.mp3")
+        som.play();
+
     }
 
     bola.x += (bola.speed + bola.mod) * bola.dirx;
@@ -191,7 +230,8 @@ function increaseScore(winner) {
         }
 
         if(direita.vidas == 0) {
-            salvarPontuacao(direita);
+            // salvarPontuacao(direita);
+            showModalConfirm(direita)
             jogo.iniciado = false;
         }
     }
@@ -267,12 +307,102 @@ function desenha() {
 //Chama a função desenha a cada 10 milissegundos
 setInterval(desenha, 10)
 
+/////////////////////////////MODAL CONFIRMAR PONTUAÇÃO////////////////////////////////////////////////////
+function currentDate() {
+    var today = new Date();
+    var dia = String(today.getDate()).padStart(2, '0');
+    var mes = String(today.getMonth() + 1).padStart(2, '0'); 
+    var ano = today.getFullYear();
+    var hora = String(today.getHours()).padStart(2, '0');
+    var min = String(today.getMinutes()).padStart(2, '0');
+    var sec = String(today.getSeconds()).padStart(2, '0');
+
+    today = `${dia}/${mes}/${ano} - ${hora}:${min}:${sec}`
+
+    // today = dd + '/' + mm + '/' + yyyy;
+    
+    return today;
+}
+
+const allPlayers = JSON.parse(localStorage.getItem("allPlayers"));
+var arrayPlayers;
+
+if(allPlayers == null) {
+    arrayPlayers = [];
+}
+else {
+    arrayPlayers = allPlayers;
+} 
+
+var newPlayer = {}
+function showModalConfirm(player) {
+    newPlayer = {
+        name: player.name,
+        score: player.max_score,
+        date: currentDate()
+    }
+
+    canvas.style.display = "none"
+    document.querySelector("#modalConfirm").style.display = "block";
+
+    construirTabelaConfirmacao(newPlayer);
+}
+
+const dontSaveScoreBtn = document.querySelector("button#dontSaveScoreBtn")
+dontSaveScoreBtn.addEventListener("click", dontSaveScore)
+
+const saveScoreBtn = document.querySelector("button#saveScoreBtn")
+saveScoreBtn.addEventListener("click", () => {
+    saveScore(newPlayer)
+})
+
+function construirTabelaConfirmacao(player) {
+    const tableConfirm = document.querySelector("#modalConfirm table")
+    const tbody = tableConfirm.querySelector('tbody')
+    
+    const row = document.createElement("tr")
+
+    const nameCell = document.createElement("th")
+    nameCell.innerHTML = player.name;
+
+    const scoreCell = document.createElement("td")
+    scoreCell.innerHTML = player.score
+
+    const dateCell = document.createElement("td")
+    dateCell.innerHTML = player.date
+
+    row.append(nameCell, scoreCell, dateCell)
+    
+    tbody.innerHTML = ""
+
+    tbody.appendChild(row)
+}
+
+
 /////////////////////////////////////////MODAL-FIM///////////////////////////////////////////////////////
+function dontSaveScore() {
+    document.querySelector("#modalConfirm").style.display = "none";
+
+    document.querySelector("#modalFim").style.display = "block";
+    construirTabela();
+}
+
+function saveScore(newPlayer) {
+    document.querySelector("#modalConfirm").style.display = "none";
+
+    document.querySelector("#modalFim").style.display = "block";
+
+    arrayPlayers.push(newPlayer)
+
+    setLocalStorage(arrayPlayers)
+    construirTabela();
+}
+
 const playAgainBtn = document.querySelector("button#playAgainBtn")
 playAgainBtn.addEventListener("click", playAgain)
 
 function playAgain() {
-    document.querySelector("#modalInicio").style.display = "block";
+    showModalIinicio();
 
     document.querySelector("#modalFim").style.display = "none";
 
@@ -285,44 +415,7 @@ function resetConfig() {
     jogo.rebatidas = 0;
 }
 
-const allPlayer = JSON.parse(localStorage.getItem("allPlayers"));
-var arrayPlayers;
-
-if(allPlayer == null) {
-    arrayPlayers = [];
-}
-else {
-    arrayPlayers = allPlayer;
-} 
-
-function currentDate() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-
-    today = dd + '/' + mm + '/' + yyyy;
-
-    return today;
-}
-
-function salvarPontuacao(player) {
-    const objPlayer = {
-        name: player.name,
-        score: player.max_score,
-        date: currentDate()
-    }
-
-    arrayPlayers.push(objPlayer)
-
-    canvas.style.display = "none"
-    document.querySelector("#modalFim").style.display = "block";
-
-    setLocalStorage();
-    construirTabela();
-}
-
-function setLocalStorage() {
+function setLocalStorage(arrayPlayers) {
     localStorage.setItem("allPlayers", JSON.stringify(arrayPlayers));
 }
 

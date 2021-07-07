@@ -1,0 +1,27 @@
+#modalConfirm {
+    display: none;
+}
+
+#modalConfirm h2 {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+#modalConfirm tbody tr {
+    transition: all 500ms;
+}
+
+#modalConfirm tbody tr:hover {
+    background-color: rgba(131, 126, 126, 0.329);
+    cursor: pointer;
+}
+
+#modalConfirm .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+}
+
+#modalConfirm .buttons button {
+    width: 30%;
+}

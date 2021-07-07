@@ -6,22 +6,27 @@
     padding: 0;
 }
 
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
 #modalInicio {
     height: 100vh;
+    width: 100vw;
 
     position: relative;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 
     /* display: none; */
 }
 
-#modalInicio form {
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+#modalInicio .formContainer {
+    width: 50vw;
 }
-
 
 #modalInicio .playerDiv {
     display: flex;
@@ -46,20 +51,40 @@
     display: none;
 }
 
-#modalInicio h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    margin-top: 2rem;
-}
 
 #modalInicio button {
     font-weight: 700;
     width: 30vw;
-
 }
 
 #modalInicio .input-group {
     margin-bottom: 2rem;
 }
 
+
+#modalInicio .instructions {
+    margin-top: 2rem;
+    width: 50vw;
+}
+
+.instructions .item {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    font-weight: 700;
+}
+
+.instructions .item img {
+    margin-right: 10px;
+}
+
+.instructions .intro {
+    margin-top: 2rem;
+    max-width: 80%;
+}
+
+.instructions .intro span {
+    font-weight: 700;
+    display: block;
+}
 

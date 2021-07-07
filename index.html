@@ -11,28 +11,73 @@
     
     <link rel="stylesheet" href="styles/modal-inicio.css">
     <link rel="stylesheet" href="styles/modal-fim.css">
+    <link rel="stylesheet" href="styles/modal-confirm.css">
     <link rel="stylesheet" href="styles/canvas.css">
+
+    <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
 </head>
 <body>
     
 
     <div class="container">
+        <h1 class="title">Crazy Ping-Pong</h1>
         <div id="modalInicio">
-            <h1>Seja bem-vindo!</h1>
-            <form onsubmit="event.preventDefault();">  
-                <div class="playerDiv">
-                    <label>Por favor, insira seu nome:</label>
-                    <input type="text" placeholder="John Doe">
+            <div class="formContainer">
+                <form onsubmit="event.preventDefault();">  
+                    <div class="playerDiv">
+                        <label>Por favor, insira seu nome:</label>
+                        <input type="text" placeholder="John Doe">
+                    </div>
+                    
+                    <div class="dialog" id="dialogPlayer" title="Nome inválido">
+                        <p>Por favor, insira um nome válido</p>
+                    </div>
+                    
+                    <div>
+                        <button class="btn btn-primary" id="startGameBtn">Iniciar</button>
+                    </div>
+                <form>
+            </div>
+
+            <div class="instructions">
+                <h2>Instruções</h2>
+                
+                <div class="item">
+                    <img src="assets/left-click.png" alt="">
+                    <p>Iniciar jogo</p>
+                </div>
+                
+                <div class="item">
+                    <img src="assets/letter-r-key-on-keyboard.png" alt="">
+                    <p>Resetar jogo</p>
                 </div>
 
-                <div class="dialog" id="dialogPlayer" title="Nome inválido">
-                    <p>Por favor, insira um nome válido</p>
+                <div class="item">
+                    <div class="keys">
+                        <img src="assets/arrow-up.png" alt="">
+                        <img src="assets/key-w.png" alt="">
+                    </div>
+                    <p>Mover para cima</p>
                 </div>
 
-                <div>
-                    <button class="btn btn-primary" id="startGameBtn">Iniciar</button>
+                <div class="item">
+                    <div class="keys">
+                        <img src="assets/arrow-down.png" alt="">
+                        <img src="assets/key-s.png" alt="">
+                    </div>
+                    <p>Mover para baixo</p>
                 </div>
-            <form>
+
+                <p class="intro">
+                    <span>Como funciona?</span>
+                    Sempre que a bola for rebatida, ela será lançada em uma direção totalmente aleatória e a sua velocidade aumenta!
+                    <br>
+                    O jogador possui 3 vidas no total. Ao final dessas 3 vidas, o jogador terá a opção de salvar a pontuação máxima atingida naquela sessão.
+                    <br>
+                    <br>
+                    Boa sorte!
+                </p>
+            </div>
         </div>
 
         <div id="modalFim">
@@ -42,7 +87,7 @@
                 <thead>
                     <tr>
                     <th scope="col">Nome</th>
-                    <th scope="col">Pontuação</th>
+                    <th scope="col">Pontuação máxima</th>
                     <th scope="col">Data</th>
                     </tr>
                 </thead>
@@ -56,6 +101,27 @@
                 <button class="btn btn-primary col-12" id="playAgainBtn">Jogar novamente</button>
             </div>
             
+        </div>
+
+        <div id="modalConfirm">
+            <h2>Deseja salvar sua pontuação?</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Pontuação máxima</th>
+                        <th scope="col">Data</th>
+                    </tr>
+                </thead>
+                <tbody>            
+                </tbody>
+            </table>
+
+            <div class="buttons">
+                <button class="btn btn-primary" id="saveScoreBtn">Salvar</button>
+                <button class="btn btn-danger" id="dontSaveScoreBtn">Não salvar</button>
+            </div>
         </div>
     </div>
 
